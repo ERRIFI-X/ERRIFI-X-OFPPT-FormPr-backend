@@ -13,10 +13,12 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        $faker = $this->faker ?? (function_exists('fake') ? \fake() : \Faker\Factory::create());
+
         return [
-            'name'       => fake()->name(),
-            'email'      => fake()->unique()->safeEmail(),
-            'phone'      => fake()->phoneNumber(),
+            'name'       => $faker->name(),
+            'email'      => $faker->unique()->safeEmail(),
+            'phone'      => $faker->phoneNumber(),
             'password'   => Hash::make('password'),
             'role_id'    => Role::inRandomOrder()->first()?->id ?? Role::factory(),
         ];

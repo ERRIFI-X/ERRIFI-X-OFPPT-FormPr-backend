@@ -12,6 +12,8 @@ class ThemeFactory extends Factory
 
     public function definition(): array
     {
+        $faker = $this->faker ?? (function_exists('fake') ? \fake() : \Faker\Factory::create());
+
         $themes = [
             'Bureautique et Informatique',
             'Management et Leadership',
@@ -24,9 +26,9 @@ class ThemeFactory extends Factory
         ];
 
         return [
-            'title'        => fake()->unique()->randomElement($themes),
-            'description'  => fake()->paragraph(),
-            'duration'     => fake()->numberBetween(1, 30),
+            'title'        => $faker->unique()->randomElement($themes),
+            'description'  => $faker->paragraph(),
+            'duration'     => $faker->numberBetween(1, 30),
             'formation_id' => Formation::inRandomOrder()->first()?->id ?? Formation::factory(),
         ];
     }

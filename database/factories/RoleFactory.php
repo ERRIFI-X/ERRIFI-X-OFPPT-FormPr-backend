@@ -11,8 +11,10 @@ class RoleFactory extends Factory
 
     public function definition(): array
     {
+        $faker = $this->faker ?? (function_exists('fake') ? \fake() : \Faker\Factory::create());
+
         return [
-            'name' => fake()->unique()->randomElement(['Admin', 'CDC', 'Formateur']),
+            'name' => $faker->unique()->randomElement(['Admin', 'CDC', 'Formateur']),
         ];
     }
 }
