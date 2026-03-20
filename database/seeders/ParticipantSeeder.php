@@ -28,10 +28,16 @@ class ParticipantSeeder extends Seeder
         // Seed 30 participants
         $participantCount = min(count($pairs), 30);
         for ($i = 0; $i < $participantCount; $i++) {
-            Participant::create(array_merge($pairs[$i], [
-                'role' => 'participant',
-                'status' => 'valide',
-            ]));
+            Participant::firstOrCreate(
+                [
+                    'user_id'  => $pairs[$i]['user_id'],
+                    'theme_id' => $pairs[$i]['theme_id'],
+                ],
+                [
+                    'role'   => 'participant',
+                    'status' => 'valide',
+                ]
+            );
         }
 
         // Remove used pairs
@@ -40,11 +46,17 @@ class ParticipantSeeder extends Seeder
         // Seed 40 inscrits
         $inscritCount = min(count($remainingPairs), 40);
         for ($i = 0; $i < $inscritCount; $i++) {
-            Participant::create(array_merge($remainingPairs[$i], [
-                'role' => 'inscrit',
-                'status' => collect(['en_attente', 'valide', 'annule'])->random(),
-                'date_inscription' => now(),
-            ]));
+            Participant::firstOrCreate(
+                [
+                    'user_id'  => $remainingPairs[$i]['user_id'],
+                    'theme_id' => $remainingPairs[$i]['theme_id'],
+                ],
+                [
+                    'role'             => 'inscrit',
+                    'status'           => collect(['en_attente', 'valide', 'annule'])->random(),
+                    'date_inscription' => now(),
+                ]
+            );
         }
     }
 }

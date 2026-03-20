@@ -24,9 +24,9 @@ class ThemeFactory extends Factory
         ];
 
         return [
-            'title'       => $this->faker->unique()->randomElement($themes),
-            'description' => $this->faker->paragraph(),
-            'duration'    => $this->faker->numberBetween(1, 30),
+            'title'        => fake()->unique()->randomElement($themes),
+            'description'  => fake()->paragraph(),
+            'duration'     => fake()->numberBetween(1, 30),
             'formation_id' => Formation::inRandomOrder()->first()?->id ?? Formation::factory(),
         ];
     }

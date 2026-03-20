@@ -11,9 +11,9 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminRole     = Role::where('name', 'Admin')->first();
-        $cdcRole       = Role::where('name', 'CDC')->first();
-        $formateurRole = Role::where('name', 'Formateur')->first();
+        $adminRole     = Role::where('name', 'Admin')->firstOrFail();
+        $cdcRole       = Role::where('name', 'CDC')->firstOrFail();
+        $formateurRole = Role::where('name', 'Formateur')->firstOrFail();
 
         // Fixed Admin account
         User::firstOrCreate(
