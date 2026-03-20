@@ -17,6 +17,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
+            'phone'    => 'nullable|string|max:20',
             'password' => 'required|string|min:8|confirmed',
             'role'     => 'sometimes|string|in:Admin,CDC,Formateur',
         ]);
@@ -26,6 +27,7 @@ class AuthController extends Controller
         $user = User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
+            'phone'    => $validated['phone'] ?? null,
             'password' => Hash::make($validated['password']),
             'role_id'  => $role->id,
         ]);
