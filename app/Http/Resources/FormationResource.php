@@ -17,6 +17,7 @@ class FormationResource extends JsonResource
             'start_date'  => $this->start_date?->toDateString(),
             'end_date'    => $this->end_date?->toDateString(),
             'themes'      => ThemeResource::collection($this->whenLoaded('themes')),
+            'sessions'    => SessionResource::collection($this->whenLoaded('sessions')),
             'cdc'         => new UserResource($this->whenLoaded('cdc')),
             'formateurs'  => UserResource::collection($this->whenLoaded('formateurs')),
             'created_at'  => $this->created_at->toDateTimeString(),

@@ -12,7 +12,7 @@ class UpdateFormateurRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,10 @@ class UpdateFormateurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $this->route('formateur')->id,
+            'phone' => 'nullable|string|max:20',
+            'password' => 'sometimes|nullable|string|min:8',
         ];
     }
 }

@@ -42,8 +42,16 @@ class FormationController extends Controller
             $data['cdc_id'] = auth()->id();
         }
 
+        $formateurIds = $data['formateur_ids'] ?? [];
+        unset($data['formateur_ids']);
+
         $formation = Formation::create($data);
-        return new FormationResource($formation->load(['themes', 'cdc']));
+
+        if (!empty($formateurIds)) {
+            $formation->formateurs()->sync($formateurIds);
+        }
+
+        return new FormationResource($formation->load(['themes', 'cdc', 'formateurs']));
     }
 
     public function show(Formation $formation)
@@ -55,8 +63,15 @@ class FormationController extends Controller
     {
         $this->authorizeAction($formation);
         
-        $formation->update($request->validated());
-        return new FormationResource($formation->load(['themes', 'cdc']));
+        $data = $request->validated();
+
+        if (isset($data['formateur_ids'])) {
+            $formation->formateurs()->sync($data['formateur_ids']);
+            unset($data['formateur_ids']);
+        }
+        
+        $formation->update($data);
+        return new FormationResource($formation->load(['themes', 'cdc', 'formateurs']));
     }
 
     public function destroy(Formation $formation)

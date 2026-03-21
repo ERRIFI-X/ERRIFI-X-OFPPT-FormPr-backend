@@ -19,6 +19,8 @@ class UpdateFormationRequest extends FormRequest
             'location'    => 'nullable|string|max:255',
             'start_date'  => 'sometimes|required|date',
             'end_date'    => 'sometimes|required|date|after_or_equal:start_date',
+            'formateur_ids' => 'nullable|array',
+            'formateur_ids.*' => 'exists:users,id',
         ];
     }
 }
