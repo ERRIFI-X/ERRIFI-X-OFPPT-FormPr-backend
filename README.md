@@ -1,16 +1,56 @@
-# OFPPT Training Management System - Backend API
+# OFPPT-FormPr Backend (Laravel 12)
 
-## 📝 Description
-This is the backend REST API for the **OFPPT Training Management System**. It provides a robust and secure foundation for managing training formations, themes, sessions, participants, and absences. Built with Laravel 12, it follows modern best practices for API development, including Role-Based Access Control (RBAC) and Sanctum-based authentication.
+This is the backend API for the OFPPT Formation Project. It provides a RESTful API built with Laravel 12 and uses Sanctum for authentication.
 
----
+## 🚀 Getting Started
 
-## 🚀 Tech Stack
-- **Framework**: [Laravel 12](https://laravel.com)
-- **PHP**: ^8.2
-- **Authentication**: [Laravel Sanctum](https://laravel.com/docs/sanctum)
-- **Database**: SQLite (default) / MySQL / PostgreSQL
-- **Tools**: Laravel Tinker, Artisan, Composer
+### Prerequisites
+- PHP 8.2+
+- Composer
+- SQLite (default) or MySQL/PostgreSQL
+
+### Quick Setup
+We've included a setup script to get you started quickly:
+```bash
+composer setup
+```
+This command will:
+1. Copy `.env.example` to `.env` (if not exists)
+2. Install PHP dependencies
+3. Generate application key
+4. Run database migrations
+5. Install and build frontend assets (if applicable)
+
+### Manual Installation
+1. Install dependencies:
+   ```bash
+   composer install
+   ```
+2. Configure environment:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+3. Initialize database:
+   ```bash
+   touch database/database.sqlite
+   php artisan migrate --seed
+   ```
+
+### Development
+Run the development server:
+```bash
+php artisan serve
+```
+
+## 🔐 API Authentication
+The project uses **Laravel Sanctum**. To access protected routes, include the `Authorization: Bearer <token>` header in your requests.
+
+## 🛠 Tech Stack
+- **Framework:** Laravel 12
+- **Authentication:** Sanctum
+- **Database:** SQLite (Development)
+- **API Documentation:** Scribe (optional/planned)
 
 ---
 
@@ -25,45 +65,6 @@ This is the backend REST API for the **OFPPT Training Management System**. It pr
   - 📂 **Documents**: Manage related training materials.
 - **Form Validation**: Robust input validation using Laravel FormRequests.
 - **API Resources**: Consistent JSON responses for all endpoints.
-
----
-
-## 🛠️ Installation & Setup
-
-### 1. Prerequisites
-Ensure you have the following installed:
-- PHP ^8.2
-- Composer
-- Node.js & NPM (for frontend assets if applicable)
-
-### 2. Quick Setup
-The project includes a convenient setup script:
-```bash
-composer setup
-```
-This command will:
-- Install dependencies
-- Copy `.env.example` to `.env`
-- Generate the Application Key
-- Run migrations and seeds
-- Build assets
-
-### 3. Manual Steps (Alternative)
-If you prefer manual setup:
-```bash
-# Install PHP dependencies
-composer install
-
-# Configure Environment
-cp .env.example .env
-php artisan key:generate
-
-# Run Migrations & Seeders
-php artisan migrate --seed
-
-# Start the Server
-php artisan serve
-```
 
 ---
 

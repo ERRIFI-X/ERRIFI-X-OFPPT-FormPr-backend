@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AbsenceController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormateurController;
 use App\Http\Controllers\Api\FormationController;
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Auth profile & logout
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/dashboard/stats', [DashboardController::class, 'getStats']);
 
     // Resource API Routes
     Route::apiResource('themes', ThemeController::class);
