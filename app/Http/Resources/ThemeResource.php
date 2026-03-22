@@ -19,6 +19,7 @@ class ThemeResource extends JsonResource
             'duration'    => $this->duration,
             'formation'   => new FormationResource($this->whenLoaded('formation')),
             'participants' => ParticipantResource::collection($this->whenLoaded('participants')),
+            'sessions'    => SessionResource::collection($this->whenLoaded('sessions')),
             'created_at'  => $this->created_at->toDateTimeString(),
         ];
     }

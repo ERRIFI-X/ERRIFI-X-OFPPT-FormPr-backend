@@ -15,6 +15,7 @@ class StoreSessionRequest extends FormRequest
     {
         return [
             'formation_id' => 'required|exists:formations,id',
+            'theme_id'     => 'required|exists:themes,id',
             'title'        => 'required|string|max:255',
             'date'         => 'required|date',
             'start_time'   => 'required|date_format:H:i',

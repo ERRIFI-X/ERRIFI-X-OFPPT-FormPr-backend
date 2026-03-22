@@ -12,12 +12,14 @@ class SessionResource extends JsonResource
         return [
             'id'           => $this->id,
             'formation_id' => $this->formation_id,
+            'theme_id'     => $this->theme_id,
             'title'        => $this->title,
             'date'         => $this->date?->toDateString(),
             'start_time'   => $this->start_time,
             'end_time'     => $this->end_time,
             'location'     => $this->location,
             'formation'    => new FormationResource($this->whenLoaded('formation')),
+            'theme'        => new ThemeResource($this->whenLoaded('theme')),
         ];
     }
 }

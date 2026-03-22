@@ -16,6 +16,11 @@ class Theme extends Model
         return $this->belongsTo(Formation::class);
     }
 
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
+
     public function inscrits()
     {
         return $this->hasMany(Participant::class)->where('role', 'inscrit');
