@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sessions', function (Blueprint $table) {
-            $table->foreignId('theme_id')->after('formation_id')->constrained('themes')->onDelete('cascade');
-        });
+        if (!Schema::hasColumn('sessions', 'theme_id')) {
+            Schema::table('sessions', function (Blueprint $table) {
+                $table->foreignId('theme_id')->after('formation_id')->constrained('themes')->onDelete('cascade');
+            });
+        }
     }
 
     /**
