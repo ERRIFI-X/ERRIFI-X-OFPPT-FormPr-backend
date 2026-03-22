@@ -52,7 +52,7 @@ class FormateurController extends Controller
             abort(404, 'User is not a formateur.');
         }
 
-        return new UserResource($formateur->load(['role','participations.theme.formation.sessions']));
+        return new UserResource($formateur->load(['role','participations.theme.formation.sessions', 'participations.theme.participants.user']));
     }
 
     /**

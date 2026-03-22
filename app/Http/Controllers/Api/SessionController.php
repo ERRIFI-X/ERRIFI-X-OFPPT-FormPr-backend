@@ -7,6 +7,9 @@ use App\Http\Requests\StoreSessionRequest;
 use App\Http\Resources\SessionResource;
 use App\Models\Formation;
 use App\Models\Session;
+use App\Models\Theme;
+use App\Notifications\SessionScheduledNotification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -31,6 +34,15 @@ class SessionController extends Controller
         }
 
         $session = Session::create($request->validated());
+        
+        // Notify all participants of the theme
+        $theme = Theme::find($session->theme_id);
+        if ($theme) {
+            foreach ($theme->participants as $participant) {
+                $participant->user->notify(new SessionScheduledNotification($session, $theme));
+            }
+        }
+
         return new SessionResource($session);
     }
 

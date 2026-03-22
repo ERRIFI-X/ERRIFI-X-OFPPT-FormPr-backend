@@ -7,6 +7,7 @@ use App\Http\Requests\StoreThemeRequest;
 use App\Http\Requests\UpdateThemeRequest;
 use App\Http\Resources\ThemeResource;
 use App\Models\Theme;
+use App\Notifications\ThemeUpdatedNotification;
 
 class ThemeController extends Controller
 {
@@ -29,6 +30,12 @@ class ThemeController extends Controller
     public function update(UpdateThemeRequest $request, Theme $theme)
     {
         $theme->update($request->validated());
+
+        // Notify all participants
+        foreach ($theme->participants as $participant) {
+            $participant->user->notify(new ThemeUpdatedNotification($theme));
+        }
+
         return new ThemeResource($theme);
     }
 
