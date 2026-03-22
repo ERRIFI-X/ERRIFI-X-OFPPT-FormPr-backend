@@ -31,8 +31,8 @@ class ThemeController extends Controller
     {
         $theme->update($request->validated());
 
-        // Notify all participants
-        foreach ($theme->participants as $participant) {
+        // Notify all formateurs (realParticipants)
+        foreach ($theme->realParticipants as $participant) {
             $participant->user->notify(new ThemeUpdatedNotification($theme));
         }
 

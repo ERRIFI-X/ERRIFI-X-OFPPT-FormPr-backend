@@ -16,7 +16,7 @@ class SessionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Session::with('formation');
+        $query = Session::with(['formation', 'theme']);
         
         if ($request->has('formation_id')) {
             $query->where('formation_id', $request->formation_id);
@@ -38,7 +38,7 @@ class SessionController extends Controller
         // Notify all participants of the theme
         $theme = Theme::find($session->theme_id);
         if ($theme) {
-            foreach ($theme->participants as $participant) {
+            foreach ($theme->realParticipants as $participant) {
                 $participant->user->notify(new SessionScheduledNotification($session, $theme));
             }
         }
