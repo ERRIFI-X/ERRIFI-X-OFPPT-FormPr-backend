@@ -14,6 +14,7 @@ class FormationResource extends JsonResource
             'title'       => $this->title,
             'description' => $this->description,
             'location'    => $this->location,
+            'status'      => $this->status,
             'start_date'  => $this->start_date?->toDateString(),
             'end_date'    => $this->end_date?->toDateString(),
             'themes'      => ThemeResource::collection($this->whenLoaded('themes')),

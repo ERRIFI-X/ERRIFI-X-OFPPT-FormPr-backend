@@ -28,6 +28,10 @@ class UserResource extends JsonResource
                     // Prevent infinite recursion (Formation -> Theme -> Formation -> Theme...)
                     foreach ($formationThemes as $theme) {
                         $theme->unsetRelation('formation');
+                        if ($theme->pivot) {
+                            $theme->myRole = $theme->pivot->role;
+                            $theme->myStatus = $theme->pivot->status;
+                        }
                     }
                     
                     $formation->setRelation('themes', $formationThemes);

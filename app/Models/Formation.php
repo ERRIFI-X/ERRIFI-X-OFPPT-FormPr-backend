@@ -14,6 +14,7 @@ class Formation extends Model
         'description',
         'cdc_id',
         'location',
+        'status',
         'start_date',
         'end_date',
     ];
