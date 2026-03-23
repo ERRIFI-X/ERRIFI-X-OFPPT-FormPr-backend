@@ -9,7 +9,7 @@ class Theme extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'duration', 'formation_id'];
+    protected $fillable = ['title', 'description', 'duration', 'formation_id', 'status'];
 
     public function formation()
     {

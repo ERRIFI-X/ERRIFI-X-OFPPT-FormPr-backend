@@ -35,9 +35,21 @@ class SessionController extends Controller
 
         $session = Session::create($request->validated());
         
-        // Notify all participants of the theme
+        // Notify all participants of the theme and update status
         $theme = Theme::find($session->theme_id);
         if ($theme) {
+            // Update theme status to closed
+            $theme->update(['status' => 'clôturé']);
+
+            // Check if all themes in the formation are now closed
+            $formation = $theme->formation;
+            if ($formation) {
+                $allThemesClosed = $formation->themes()->where('status', '!=', 'clôturé')->count() === 0;
+                if ($allThemesClosed) {
+                    $formation->update(['status' => 'clôturé']);
+                }
+            }
+
             foreach ($theme->realParticipants as $participant) {
                 $participant->user->notify(new SessionScheduledNotification($session, $theme));
             }

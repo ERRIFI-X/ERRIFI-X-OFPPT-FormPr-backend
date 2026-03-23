@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('formations', function (Blueprint $table) {
-            //
+        Schema::table('themes', function (Blueprint $table) {
+            $table->string('status')->default('ouvert')->after('formation_id');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('formations', function (Blueprint $table) {
-            //
+        Schema::table('themes', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };
