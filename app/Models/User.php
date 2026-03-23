@@ -47,10 +47,18 @@ class User extends Authenticatable
                     ->withTimestamps();
     }
 
-    // As Participant: themes they participate in
+    // As Participant: themes they participate in via participations relation
     public function participations()
     {
         return $this->hasMany(Participant::class)->where('role', 'participant');
+    }
+
+    // Themes they participate in directly
+    public function themes()
+    {
+        return $this->belongsToMany(Theme::class, 'participants', 'user_id', 'theme_id')
+                    ->wherePivot('role', 'participant')
+                    ->withPivot(['id', 'role', 'status', 'date_inscription']);
     }
 
     public function inscriptions()

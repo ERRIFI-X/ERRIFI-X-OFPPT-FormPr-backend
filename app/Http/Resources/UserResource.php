@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'role'  => $this->whenLoaded('role', fn () => $this->role->name),
             'assigned_formations' => FormationResource::collection($this->whenLoaded('assignedFormations')),
             'participations' => ParticipantResource::collection($this->whenLoaded('participations')),
+            'themes' => ThemeResource::collection($this->whenLoaded('themes')),
         ];
     }
 }
