@@ -18,7 +18,7 @@ class FormateurController extends Controller
     {
         $formateurs = User::whereHas('role', function ($query) {
             $query->where('name', 'Formateur');
-        })->with(['role','themes.participants.user'])->get();
+        })->with(['role', 'themes.formation', 'themes.participants.user'])->get();
 
         return UserResource::collection($formateurs);
     }
@@ -52,7 +52,7 @@ class FormateurController extends Controller
             abort(404, 'User is not a formateur.');
         }
 
-        return new UserResource($formateur->load(['role', 'themes.participants.user']));
+        return new UserResource($formateur->load(['role', 'themes.formation', 'themes.participants.user']));
     }
 
     /**

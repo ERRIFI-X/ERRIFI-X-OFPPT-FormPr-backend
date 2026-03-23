@@ -17,9 +17,15 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'role'  => $this->whenLoaded('role', fn () => $this->role->name),
-            'assigned_formations' => FormationResource::collection($this->whenLoaded('assignedFormations')),
-            'participations' => ParticipantResource::collection($this->whenLoaded('participations')),
-            'themes' => ThemeResource::collection($this->whenLoaded('themes')),
+            'formations' => $this->whenLoaded('themes', function () {
+                $themes = $this->themes;
+                // Group the loaded themes by formation
+                $formations = $themes->map->formation->filter()->unique('id')->values();
+                $formations->each(function ($formation) use ($themes) {
+                    $formation->setRelation('themes', $themes->where('formation_id', $formation->id)->values());
+                });
+                return FormationResource::collection($formations);
+            }),
         ];
     }
 }
