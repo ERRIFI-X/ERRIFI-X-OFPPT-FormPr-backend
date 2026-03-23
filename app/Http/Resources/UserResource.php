@@ -19,11 +19,20 @@ class UserResource extends JsonResource
             'role'  => $this->whenLoaded('role', fn () => $this->role->name),
             'formations' => $this->whenLoaded('themes', function () {
                 $themes = $this->themes;
-                // Group the loaded themes by formation
-                $formations = $themes->map->formation->filter()->unique('id')->values();
+                // Get unique formations
+                $formations = $themes->map(fn($t) => $t->formation)->filter()->unique('id')->values();
+                
                 $formations->each(function ($formation) use ($themes) {
-                    $formation->setRelation('themes', $themes->where('formation_id', $formation->id)->values());
+                    $formationThemes = $themes->where('formation_id', $formation->id)->values();
+                    
+                    // Prevent infinite recursion (Formation -> Theme -> Formation -> Theme...)
+                    foreach ($formationThemes as $theme) {
+                        $theme->unsetRelation('formation');
+                    }
+                    
+                    $formation->setRelation('themes', $formationThemes);
                 });
+                
                 return FormationResource::collection($formations);
             }),
         ];
