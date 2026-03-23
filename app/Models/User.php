@@ -53,11 +53,10 @@ class User extends Authenticatable
         return $this->hasMany(Participant::class)->where('role', 'participant');
     }
 
-    // Themes they participate in directly
+    // Themes they participate in directly (both as participant and inscrit)
     public function themes()
     {
         return $this->belongsToMany(Theme::class, 'participants', 'user_id', 'theme_id')
-                    ->wherePivot('role', 'participant')
                     ->withPivot(['id', 'role', 'status', 'date_inscription']);
     }
 
