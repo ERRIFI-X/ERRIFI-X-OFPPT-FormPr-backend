@@ -16,7 +16,7 @@ class SessionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Session::with(['formation', 'theme']);
+        $query = Session::with(['formation', 'theme.participants.user']);
         
         if ($request->has('formation_id')) {
             $query->where('formation_id', $request->formation_id);
