@@ -29,8 +29,8 @@ class UserResource extends JsonResource
                     foreach ($formationThemes as $theme) {
                         $theme->unsetRelation('formation');
                         if ($theme->pivot) {
-                            $theme->my_role = $theme->pivot->role;
-                            $theme->my_status = $theme->pivot->status;
+                            $theme->myRole = $theme->pivot->role;
+                            $theme->myStatus = $theme->pivot->status;
                         }
                     }
                     
