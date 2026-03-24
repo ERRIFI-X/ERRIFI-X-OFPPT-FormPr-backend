@@ -38,14 +38,20 @@ class SessionController extends Controller
         // Notify all participants of the theme and update status
         $theme = Theme::find($session->theme_id);
         if ($theme) {
-            // Update theme status to closed
-            $theme->update(['status' => 'clôturé']);
+            // Update theme status to in progress
+            $theme->update(['status' => 'en_cours']);
 
-            // Check if all themes in the formation are now closed
+            // Update formation status
             $formation = $theme->formation;
             if ($formation) {
-                $allThemesClosed = $formation->themes()->where('status', '!=', 'clôturé')->count() === 0;
-                if ($allThemesClosed) {
+                // If the formation was pending, mark it as in progress
+                if ($formation->status !== 'clôturé') {
+                    $formation->update(['status' => 'en_cours']);
+                }
+
+                // Check if all themes in the formation are now en_cours
+                $allThemesHandled = $formation->themes()->where('status', '!=', 'en_cours')->count() === 0;
+                if ($allThemesHandled) {
                     $formation->update(['status' => 'clôturé']);
                 }
             }
