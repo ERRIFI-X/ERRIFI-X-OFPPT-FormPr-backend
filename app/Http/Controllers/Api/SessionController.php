@@ -48,6 +48,12 @@ class SessionController extends Controller
                 if ($formation->status !== 'clôturé') {
                     $formation->update(['status' => 'en_cours']);
                 }
+
+                // Restore: Check if all themes in the formation are now en_cours
+                $allThemesHandled = $formation->themes()->where('status', '!=', 'en_cours')->count() === 0;
+                if ($allThemesHandled) {
+                    $formation->update(['status' => 'clôturé']);
+                }
             }
 
             foreach ($theme->realParticipants as $participant) {
